@@ -25,7 +25,7 @@ webpackJsonp([0], [function(t, e, n) {
 			d = [5e3, 5e3, 5e3, 1e4];
 		if(s) o.addClass("css3");
 		else {
-			for(var p = r.find(".img_box"), u = 1; u < 5; u++) p.eq(u - 1).find("img")[0].src = "img/0" + u + ".jpg";
+			for(var p = r.find(".img_box"), u = 1; u < 5; u++) p.eq(u - 1).find("images")[0].src = "images/0" + u + ".jpg";
 			window.onresize = function() {
 				var t = a(window).width(),
 					e = a(window).height();
