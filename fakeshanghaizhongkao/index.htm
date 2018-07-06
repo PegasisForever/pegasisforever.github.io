@@ -46,7 +46,10 @@ function sub(){
                     return false;
                 }
             }
-            valid && document.forms[0].submit();
+            //valid && document.forms[0].submit();
+            //alert("index_files/"+document.forms[0].elements[1].value);
+            window.location="index_files/"+document.forms[0].elements[1].value+".html";
+
         }
 function submit(){
 var mm = document.getElementById("MMNET");
@@ -64,7 +67,7 @@ return true;
 <li><label>报名号:</label><input name="BMH" required="" type="text"><span class="info">* 请输入12位高中学业考报名号</span></li>
              <li><label>密码:</label><input id="MM" value="" name="MM" required="" type="password"><span class="info">* 密码为证件号码中不含字母的后六位数字</span></li>
              <li><label>验证码</label><input class="code" name="verifyCode" required="" type="text"><span class="info">* 按图中字符填写，不区分大小写</span><img id="verify" title="点击更换" onclick="changeCode();" src="index_files/verifyImg.jpg"></li>
-            <li><a href="#" onclick="sub()" class="btn">查询</a></li>
+            <li><a onclick="sub()" class="btn">查询</a></li>
             </ul>
 <div class="shuoming">建议使用：火狐浏览器、Chrome浏览器、IE10及以上版本的浏览器</div>
         </form>
