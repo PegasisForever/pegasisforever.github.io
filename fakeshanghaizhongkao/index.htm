@@ -3,7 +3,7 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>2018年上海市普通高中学业水平等级性考试成绩查询</title>
+	<title>2018年上海市初中毕业统一学业考试成绩查询</title>
     	<link rel="stylesheet" href="index_files/style.css">
 <style>
 .info{
@@ -22,17 +22,19 @@
 
 }
 .shuoming{
-    color: #252525;
+    color: #ff0000;
     line-height: 26px;
     text-align:center;
     margin-top: 30px;
     font-size: 14px;
  
-    margin-top: 40px;
+    margin-top: 60px;
 }
 </style>
 <script>
-  function changeCode(){  document.getElementById("verify").src = "/shmeea/q/verifyImg?t="+ Math.random(); }
+  function changeCode(){
+  	alert("f");
+    document.getElementById("verify").src = "/verifyCode/"+ Math.floor(Math.random()*10);+".jpg" }
   setTimeout(function(){document.getElementById("msg").innerHTML=''},6000)
 
 function sub(){
@@ -61,15 +63,18 @@ return true;
 <body>
        <center style="color:red;" id="msg"></center>
 	<div class="logo"><img src="index_files/logo.jpg" alt=""></div>
-	<h2 class="title">2018年上海市普通高中学业水平等级性考试成绩查询</h2>
+	<h2 class="title">2018年上海市初中毕业统一学业考试成绩查询</h2>
      <form method="post" action="/shmeea/q/query/result" onsubmit="submit()" name="form1"> <input value="f3389603-d182-4e3b-a530-88137445465c" name="examId" type="hidden">
           <ul class="search-form">
-<li><label>报名号:</label><input name="BMH" required="" type="text"><span class="info">* 请输入12位高中学业考报名号</span></li>
-             <li><label>密码:</label><input id="MM" value="" name="MM" required="" type="password"><span class="info">* 密码为证件号码中不含字母的后六位数字</span></li>
+<li><label>考生报名号:</label><input name="BMH" required="" type="text"><span class="info"> </span></li>
+             <li><label>密码:</label><input id="MM" value="" name="MM" required="" type="password"><span class="info">* 考生本人身份证最后不含字母的六位数字</span></li>
              <li><label>验证码</label><input class="code" name="verifyCode" required="" type="text"><span class="info">* 按图中字符填写，不区分大小写</span><img id="verify" title="点击更换" onclick="changeCode();" src="index_files/verifyImg.jpg"></li>
             <li><a onclick="sub()" class="btn">查询</a></li>
             </ul>
-<div class="shuoming">建议使用：火狐浏览器、Chrome浏览器、IE10及以上版本的浏览器</div>
+            <div class="bt">
+      <div class="shuoming" text="#ff0000">注：输入考生报名号和密码（考生本人身份证最后不含字母的六位数字）查询考试成绩。<br>
+    </div>
+</div>
         </form>
 
 
