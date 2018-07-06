@@ -1,0 +1,129 @@
+input{
+	padding: 0;
+	margin: 0;
+}
+li{
+	list-style: none;
+}
+img{
+	max-width: 100%;
+}
+.logo{
+	margin-top: 60px;
+	text-align: center;
+}
+.title{
+	text-align: center;
+	color: #666;
+	letter-spacing: 1px;
+}
+.search-form{
+	padding: 0;
+	width: 300px;
+	margin: 50px auto 0;
+}
+.search-form li{
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+.search-form label{
+	float: left;
+	width: 80px;
+	line-height: 38px;
+	font-size: 14px;
+	color: #666;
+}
+.search-form input{
+	width: 216px;
+	height: 36px;
+	border: 1px solid #ddd;
+	text-indent: 5px;
+}
+.search-form input.code{
+	margin-right: 10px;
+	width: 120px;
+	float: left;
+}
+
+.search-form a.btn{
+	margin-top: 30px;
+	display: block;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	border-radius: 3px;
+	background: #0270c5;
+	color: #fff;
+	text-decoration: none;
+}
+.description{
+	padding: 20px 0;
+	font-size: 14px;
+	text-align: center;
+	color: #bf0c0c;
+}
+
+.title1{
+	text-align: center;
+	color: #0270c5;
+}
+.result{
+	width: 500px;
+	margin: 0 auto;
+}
+.result .result-img{
+	text-align: center;
+}
+.number{
+	overflow: hidden;
+	border-bottom: 1px solid #ddd;
+}
+.number p{
+	float: left;
+	margin-right: 40px;
+}
+.subject p{
+	float: left;
+	margin-right: 38px;
+	color: #0270c5;
+}
+.subject p.yw{
+	margin-left: 10px;
+}
+.subject p.wy{
+	margin-right: 70px;
+}
+.subject p.dl{
+	margin-right: 75px;
+}
+.subject p.zf{
+	margin-right: 30px;
+}
+.subject p.fjf{
+	margin-right: 0;
+}
+.dl-sub{
+	margin-left: 215px;
+	clear: both;
+}
+.dl-sub p{
+	margin: 5px 0;
+	margin-right: 28px;
+	float: left;
+	font-size: 14px;
+}
+
+
+@media (max-width: 640px) {
+	.logo{
+		margin-top: 10px;
+	}
+	.title{
+		letter-spacing: 0;
+		font-size: 20px;
+	}
+	.search-form{
+		margin: 20px auto;
+	}
+}
