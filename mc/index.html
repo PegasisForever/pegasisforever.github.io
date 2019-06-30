@@ -31,7 +31,6 @@
             background-color: white;
             border-radius: 5px;
             border: 3px solid #4CAF50;
-            /*height: 35px;*/
             outline-width: 0;
             font-size: 25px;
 
@@ -43,7 +42,6 @@
             color: white;
             border: 0;
             border-radius: 3px;
-            /*height: 50px;*/
             padding: 10px;
         }
         button:hover{
@@ -101,13 +99,14 @@
 </head>
 <body>
 <p id="server_status_text">Current Server Status: Getting Data.....</p>
-<p id="info_text">Be patient, starting the server may take up to 3 minutes and stopping the server takes about 1 minute.</p>
+<p id="info_text">Please be patient, starting the server may take up to 3 minutes and stopping the server takes about 1 minute.</p>
 <br>
 <div class="button_div">
     <button onclick="startServer()">Start Server</button>
     <button onclick="stopServer()">Stop Server</button>
 </div>
 <div id="download_btns" class="button_div" style="margin-top: 100px;display: none;">
+    <p style="font-size: 20px;margin-bottom: 10px">Download For Windows:</p>
     <button class="download_btn" onclick="window.location='https://test.pegasis.site/files/mc1.14.3.zip'">Download Minecraft 1.14.3 (226MB)</button>
     <br>
     <button class="download_btn" onclick="window.location='https://test.pegasis.site/files/java 64bit installer.exe'">Download Java Installer (76MB)</button>
