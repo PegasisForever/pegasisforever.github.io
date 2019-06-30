@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1">
+    <title>Minecraft Server Control Panel</title>
+    <script src="../res/cache/jquery.min.js"></script>
+
+    <style>
+        body{
+            margin: 10px;
+            padding: 0;
+        }
+        p{
+            font-family: "Helvetica", "Arial", sans-serif;
+            font-size: 30px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #info_text{
+            font-size: 20px;
+        }
+        #button_div{
+            margin: 0 auto;
+            text-align: center;
+        }
+        button{
+            display: inline-block;
+            vertical-align: top;
+            margin: 5px 0 5px 5px;
+            background-color: white;
+            border-radius: 5px;
+            border: 3px solid #4CAF50;
+            height: 35px;
+            outline-width: 0;
+            font-size: 25px;
+
+            -webkit-transition-duration: 0.05s; /* Safari */
+            transition-duration: 0.05s;
+        }
+        button:hover{
+            background-color: #eee;
+        }
+        button:active {
+            transform:scale(0.97);
+        }
+    </style>
+
+    <script>
+        function getMcServerStatus() {
+            $.get("https://test.pegasis.site:25565/server_status", function( data ) {
+                if (data === "true") {
+                    document.getElementById("server_status_text").innerText="Current Server Status: Running"
+                }else{
+                    document.getElementById("server_status_text").innerText="Current Server Status: Stopped"
+                }
+            }).fail(function() {
+                document.getElementById("server_status_text").innerText="Current Server Status: Cannot Get Data"
+            }).always(function() {
+                setTimeout(getMcServerStatus,2000)
+            });
+        }
+
+        function startServer() {
+            alert("Starting the server... Please be patient");
+            $.post("https://test.pegasis.site:25565/start_server", function( data ) {
+
+            }).fail(function() {
+                alert("Failed to start server: cannot connect")
+            });
+        }
+
+        function stopServer() {
+            alert("Stopping the server... Please be patient");
+            $.post("https://test.pegasis.site:25565/stop_server", function( data ) {
+
+            }).fail(function() {
+                alert("Failed to start server: cannot connect")
+            });
+        }
+
+        getMcServerStatus();
+    </script>
+</head>
+<body>
+<p id="server_status_text">Current Server Status: Getting Data.....</p>
+<p id="info_text">Be patient, starting the server may take up to 3 minutes and stopping the server takes about 1 minute.</p>
+<br>
+<div id="button_div">
+    <button onclick="startServer()">Start Server</button>
+    <button onclick="stopServer()">Stop Server</button>
+</div>
+</body>
+</html>
