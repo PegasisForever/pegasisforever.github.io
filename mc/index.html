@@ -8,7 +8,7 @@
 
     <style>
         body{
-            margin: 10px;
+            margin: 5%;
             padding: 0;
         }
         p{
@@ -20,26 +20,37 @@
         #info_text{
             font-size: 20px;
         }
-        #button_div{
+        .button_div{
             margin: 0 auto;
             text-align: center;
         }
         button{
             display: inline-block;
             vertical-align: top;
-            margin: 5px 0 5px 5px;
+            margin: 5px;
             background-color: white;
             border-radius: 5px;
             border: 3px solid #4CAF50;
-            height: 35px;
+            /*height: 35px;*/
             outline-width: 0;
             font-size: 25px;
 
             -webkit-transition-duration: 0.05s; /* Safari */
             transition-duration: 0.05s;
         }
+        .download_btn{
+            background-color: #4848ff;
+            color: white;
+            border: 0;
+            border-radius: 3px;
+            /*height: 50px;*/
+            padding: 10px;
+        }
         button:hover{
             background-color: #eee;
+        }
+        .download_btn:hover{
+            background-color: #3535bc;
         }
         button:active {
             transform:scale(0.97);
@@ -80,15 +91,26 @@
         }
 
         getMcServerStatus();
+
+        window.onload=function () {
+            if (navigator.platform.indexOf("Win")!==-1) {
+                document.getElementById("download_btns").style.display="block"
+            }
+        }
     </script>
 </head>
 <body>
 <p id="server_status_text">Current Server Status: Getting Data.....</p>
 <p id="info_text">Be patient, starting the server may take up to 3 minutes and stopping the server takes about 1 minute.</p>
 <br>
-<div id="button_div">
+<div class="button_div">
     <button onclick="startServer()">Start Server</button>
     <button onclick="stopServer()">Stop Server</button>
+</div>
+<div id="download_btns" class="button_div" style="margin-top: 100px;display: none;">
+    <button class="download_btn" onclick="window.location='https://test.pegasis.site/files/mc1.14.3.zip'">Download Minecraft 1.14.3 (226MB)</button>
+    <br>
+    <button class="download_btn" onclick="window.location='https://test.pegasis.site/files/java 64bit installer.exe'">Download Java Installer (76MB)</button>
 </div>
 </body>
 </html>
