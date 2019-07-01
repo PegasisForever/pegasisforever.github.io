@@ -5,111 +5,134 @@
     <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1">
     <title>Minecraft Server Control Panel</title>
     <script src="../res/cache/jquery.min.js"></script>
+    <link rel="stylesheet" href="../res/cache/material.teal-blue.min.css">
+    <script defer src="../res/cache/material.min.js"></script>
 
     <style>
-        body{
-            margin: 5%;
+        body {
             padding: 0;
+            margin: 0;
         }
-        p{
-            font-family: "Helvetica", "Arial", sans-serif;
+
+        p {
+            /*font-family: "Helvetica", "Arial", sans-serif;*/
             font-size: 30px;
             margin: 0 auto;
             text-align: center;
         }
-        #info_text{
+
+        #vm_status_text{
+            padding-top:30px;
+            margin-bottom: 10px;
+        }
+
+        #info_text {
             font-size: 20px;
         }
-        .button_div{
+
+        #progress_bar{
+            position: relative;
+            top:4px;
+            left:6px;
+        }
+
+        #vm_status_div{
             margin: 0 auto;
             text-align: center;
         }
-        button{
-            display: inline-block;
-            vertical-align: top;
-            margin: 5px;
-            background-color: white;
-            border-radius: 5px;
-            border: 3px solid #4CAF50;
-            outline-width: 0;
-            font-size: 25px;
 
-            -webkit-transition-duration: 0.05s; /* Safari */
-            transition-duration: 0.05s;
+        .button_div {
+            margin: 0 auto;
+            text-align: center;
         }
-        .download_btn{
-            background-color: #4848ff;
-            color: white;
-            border: 0;
-            border-radius: 3px;
-            padding: 10px;
+
+        .button_div > button{
+            margin-top: 10px;
         }
-        button:hover{
-            background-color: #eee;
-        }
-        .download_btn:hover{
-            background-color: #3535bc;
-        }
-        button:active {
-            transform:scale(0.97);
+
+        .firstcap{
+            text-transform: capitalize;
         }
     </style>
 
     <script>
-        function getMcServerStatus() {
-            $.get("https://test.pegasis.site:25565/server_status", function( data ) {
-                if (data === "true") {
-                    document.getElementById("server_status_text").innerText="Current Server Status: Running"
-                }else{
-                    document.getElementById("server_status_text").innerText="Current Server Status: Stopped"
-                }
-            }).fail(function() {
-                document.getElementById("server_status_text").innerText="Current Server Status: Cannot Get Data"
-            }).always(function() {
-                setTimeout(getMcServerStatus,2000)
-            });
-        }
+        var vmState = "Unknown"
 
-        function startServer() {
-            alert("Starting the server... Please be patient");
-            $.post("https://test.pegasis.site:25565/start_server", function( data ) {
-
-            }).fail(function() {
-                alert("Failed to start server: cannot connect")
-            });
-        }
-
-        function stopServer() {
-            alert("Stopping the server... Please be patient");
-            $.post("https://test.pegasis.site:25565/stop_server", function( data ) {
-
-            }).fail(function() {
-                alert("Failed to start server: cannot connect")
-            });
-        }
-
-        getMcServerStatus();
-
-        window.onload=function () {
-            if (navigator.platform.indexOf("Win")!==-1) {
-                document.getElementById("download_btns").style.display="block"
+        function changeVmState(newState) {
+            if (newState === "Running"){
+                document.getElementById("start_vm_btn").disabled = true;
+                document.getElementById("stop_vm_btn").disabled = false;
+            }else if (newState === "Terminated"){
+                document.getElementById("start_vm_btn").disabled = false;
+                document.getElementById("stop_vm_btn").disabled = true;
+            }else{
+                document.getElementById("start_vm_btn").disabled = true;
+                document.getElementById("stop_vm_btn").disabled = true;
             }
+
+            if (newState === "Starting" || newState === "Stopping"){
+                document.getElementById("progress_bar").style.display="inline-block";
+            }else{
+                document.getElementById("progress_bar").style.display="none";
+            }
+
+
+            vmState = newState;
+            document.getElementById("vm_status_text").innerText = "Current VM Status: " + newState
         }
+
+        function getVmStatus() {
+            $.get("https://test.pegasis.site:25565/vm_status", function (data) {
+                changeVmState(data)
+            }).fail(function () {
+                changeVmState("Cannot get data")
+            }).always(function () {
+                setTimeout(getVmStatus, 1000)
+            });
+        }
+
+        function startVm() {
+            changeVmState("Starting")
+            $.post("https://test.pegasis.site:25565/start_vm", function (data) {
+
+            }).fail(function () {
+                alert("Failed to start VM: cannot connect")
+            });
+        }
+
+        function stopVm() {
+            changeVmState("Stopping")
+            $.post("https://test.pegasis.site:25565/stop_vm", function (data) {
+
+            }).fail(function () {
+                alert("Failed to stop vm: cannot connect")
+            });
+        }
+
+        getVmStatus();
     </script>
 </head>
 <body>
-<p id="server_status_text">Current Server Status: Getting Data.....</p>
-<p id="info_text">Please be patient, starting the server may take up to 3 minutes and stopping the server takes about 1 minute.</p>
-<br>
-<div class="button_div">
-    <button onclick="startServer()">Start Server</button>
-    <button onclick="stopServer()">Stop Server</button>
+<div id="vm_status_div">
+    <p id="vm_status_text" style="display:inline-block">Current VM Status: Getting Data.....</p>
+    <div id="progress_bar" style="display:none" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
 </div>
-<div id="download_btns" class="button_div" style="margin-top: 100px;display: none;">
-    <p style="font-size: 20px;margin-bottom: 10px">Download For Windows:</p>
-    <button class="download_btn" onclick="window.location='https://test.pegasis.site/files/mc1.14.3.zip'">Download Minecraft 1.14.3 (226MB)</button>
+
+
+
+<div class="button_div">
+    <button disabled id="start_vm_btn" onclick="startVm()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Start VM</button>
+    <button disabled id="stop_vm_btn" onclick="stopVm()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Stop VM</button>
+</div>
+<div class="button_div" style="margin-top: 100px">
+    <p style="font-size: 20px;margin-bottom: 5px">Download For Windows:</p>
+    <button onclick="window.location='https://test.pegasis.site/files/mc1.14.3.zip'" class="firstcap mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        Download Minecraft 1.14.3 (226MB)
+    </button>
     <br>
-    <button class="download_btn" onclick="window.location='https://test.pegasis.site/files/java 64bit installer.exe'">Download Java Installer (76MB)</button>
+    <button onclick="window.location='https://test.pegasis.site/files/java 64bit installer.exe'" class="firstcap mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        Download Java Installer (76MB)
+    </button>
 </div>
 </body>
 </html>
