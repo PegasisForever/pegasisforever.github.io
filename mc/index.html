@@ -16,7 +16,6 @@
         }
 
         p {
-            /*font-family: "Helvetica", "Arial", sans-serif;*/
             font-size: 30px;
             margin: 0 auto;
             text-align: center;
@@ -64,10 +63,75 @@
             text-transform: capitalize;
         }
 
+        #servers_div{
+            display: flex;
+        }
+
+        #servers_div > .half {
+            flex: 1;
+            margin: 20px 10px 10px;
+            padding: 10px;
+        }
+
+        .server_name{
+            font-size: 25px;
+        }
+
+        .server_status{
+            font-size: 20px;
+            margin-top: 5px;
+        }
+
     </style>
 
     <script>
         var vmState = "Unknown"
+
+        var mcPegaStatus="Unknown"
+        var mcPegaPlayers=[]
+
+        var mcRewriteStatus="Unknown"
+        var mcRewritePlayers=[]
+
+        function changeServerState(serverName, state) {
+            if (serverName === "pega") {
+                if (state === "Stopped" || state ==="Starting" || state==="Preparing To Stop" || state==="Cannot get data" || state === "Unknown") {
+                    mcPegaStatus= state
+                }else{
+                    mcPegaStatus= "Running"
+                    mcPegaPlayers=JSON.parse(state)
+                }
+
+                if (mcPegaStatus === "Running") {
+                    let text="Online Players: "+mcPegaPlayers.length
+                    mcPegaPlayers.forEach(function (value) {
+                        text+= "\n"+ value
+                    })
+                    document.getElementById("pega_status").innerText=text
+
+                }else{
+                    document.getElementById("pega_status").innerText=mcPegaStatus
+                }
+            }else{
+                if (state === "Stopped" || state ==="Starting" || state==="Preparing To Stop" || state==="Cannot get data" || state === "Unknown") {
+                    mcRewriteStatus= state
+                }else{
+                    mcRewriteStatus= "Running"
+                    mcRewritePlayers=JSON.parse(state)
+                }
+
+                if (mcPegaStatus === "Running") {
+                    let text="Online Players: "+mcRewritePlayers.length
+                    mcRewritePlayers.forEach(function (value) {
+                        text+= "\n"+ value
+                    })
+                    document.getElementById("rewrite_status").innerText=text
+
+                }else{
+                    document.getElementById("rewrite_status").innerText=mcRewriteStatus
+                }
+            }
+        }
 
         function changeVmState(newState) {
             if (newState === "Running") {
@@ -102,6 +166,26 @@
             })
         }
 
+        function getMcPegaPlayers() {
+            $.get("https://test.pegasis.site:25565/mc_pega_players", function (data) {
+                changeServerState("pega",data)
+            }).fail(function () {
+                changeServerState("pega","Cannot get data")
+            }).always(function () {
+                setTimeout(getMcPegaPlayers, 1000)
+            })
+        }
+
+        function getMcRewritePlayers() {
+            $.get("https://test.pegasis.site:25565/mc_rewrite_players", function (data) {
+                changeServerState("rewrite",data)
+            }).fail(function () {
+                changeServerState("rewrite","Cannot get data")
+            }).always(function () {
+                setTimeout(getMcRewritePlayers, 1000)
+            })
+        }
+
         function startVm() {
             changeVmState("Starting")
             $.post("https://test.pegasis.site:25565/start_vm", function (data) {
@@ -121,6 +205,16 @@
         }
 
         getVmStatus()
+        getMcPegaPlayers()
+        getMcRewritePlayers()
+
+        window.onresize = function () {
+            if (window.innerWidth > 550) {
+                document.getElementById("servers_div").style.display = "flex"
+            } else {
+                document.getElementById("servers_div").style.display = "block"
+            }
+        }
     </script>
 </head>
 <body>
@@ -139,6 +233,18 @@
             onclick="stopVm()">Stop VM
     </button>
 </div>
+
+<div id="servers_div">
+    <div class="half">
+        <p class="server_name">Pega World</p>
+        <p id="pega_status" class="server_status">Getting Data.....</p>
+    </div>
+    <div class="half">
+        <p class="server_name">Rewrite The Stars</p>
+        <p id="rewrite_status" class="server_status">Running</p>
+    </div>
+</div>
+
 <div class="button_div" style="margin-top: 100px">
     <p style="font-size: 20px;margin-bottom: 5px">Download For Windows:</p>
     <button class="firstcap mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
