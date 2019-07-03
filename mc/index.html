@@ -225,11 +225,6 @@
             }
         }
 
-        getVmStatus()
-        getMcPegaPlayers()
-        getMcRewritePlayers()
-        getLatency()
-
         function resize()  {
             if (window.innerWidth > 550) {
                 document.getElementById("servers_div").style.display = "flex"
@@ -287,6 +282,10 @@
 
 <script>
     resize()
+    getVmStatus()
+    getMcPegaPlayers()
+    getMcRewritePlayers()
+    getLatency()
 </script>
 </body>
 </html>
