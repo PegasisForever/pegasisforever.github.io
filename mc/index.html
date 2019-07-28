@@ -161,7 +161,7 @@
         }
 
         function getVmStatus() {
-            $.get("https://test.pegasis.site:25565/vm_status", function (data) {
+            $.get("https://i.pegasis.site:25565/vm_status", function (data) {
                 changeVmState(data)
             }).fail(function () {
                 changeVmState("Cannot get data")
@@ -171,7 +171,7 @@
         }
 
         function getMcPegaPlayers() {
-            $.get("https://test.pegasis.site:25565/mc_pega_players", function (data) {
+            $.get("https://i.pegasis.site:25565/mc_pega_players", function (data) {
                 changeServerState("pega",data)
             }).fail(function () {
                 changeServerState("pega","Cannot get data")
@@ -181,7 +181,7 @@
         }
 
         function getMcRewritePlayers() {
-            $.get("https://test.pegasis.site:25565/mc_rewrite_players", function (data) {
+            $.get("https://i.pegasis.site:25565/mc_rewrite_players", function (data) {
                 changeServerState("rewrite",data)
             }).fail(function () {
                 changeServerState("rewrite","Cannot get data")
@@ -192,7 +192,7 @@
 
         function startVm() {
             changeVmState("Starting")
-            $.post("https://test.pegasis.site:25565/start_vm", function (data) {
+            $.post("https://i.pegasis.site:25565/start_vm", function (data) {
 
             }).fail(function () {
                 alert("Failed to start VM: cannot connect")
@@ -201,7 +201,7 @@
 
         function stopVm() {
             changeVmState("Stopping")
-            $.post("https://test.pegasis.site:25565/stop_vm", function (data) {
+            $.post("https://i.pegasis.site:25565/stop_vm", function (data) {
 
             }).fail(function () {
                 alert("Failed to stop vm: cannot connect")
