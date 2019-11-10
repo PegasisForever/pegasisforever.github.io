@@ -156,24 +156,6 @@
         })
     }
 
-    function startVm() {
-        changeVmState("Starting")
-        $.post("https://api.pegasis.site/mc_watcher/start_vm", function (data) {
-
-        }).fail(function () {
-            alert("Failed to start VM: cannot connect")
-        })
-    }
-
-    function stopVm() {
-        changeVmState("Stopping")
-        $.post("https://api.pegasis.site/mc_watcher/stop_vm", function (data) {
-
-        }).fail(function () {
-            alert("Failed to stop vm: cannot connect")
-        })
-    }
-
     window.onresize = function(){
         if (window.innerWidth > 550) {
             document.getElementById("servers_div").style.display = "flex"
@@ -181,20 +163,9 @@
             document.getElementById("servers_div").style.display = "block"
         }
     }
-    window.onresize(undefined)
+    window.onresize()
 
     function changeVmState(newState) {
-        if (newState === "Running") {
-            document.getElementById("start_vm_btn").disabled = true
-            document.getElementById("stop_vm_btn").disabled = false
-        } else if (newState === "Terminated") {
-            document.getElementById("start_vm_btn").disabled = false
-            document.getElementById("stop_vm_btn").disabled = true
-        } else {
-            document.getElementById("start_vm_btn").disabled = true
-            document.getElementById("stop_vm_btn").disabled = true
-        }
-
         vmState = newState
         document.getElementById("vm_status_text").innerText = "Current VM Status: " + newState
     }
